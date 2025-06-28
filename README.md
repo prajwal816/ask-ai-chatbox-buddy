@@ -1,73 +1,197 @@
-# Welcome to your Lovable project
 
-## Project info
+# 🤖 Generative AI FAQ Chatbot - React Frontend
 
-**URL**: https://lovable.dev/projects/b2928f1b-9ab3-4959-95d4-e4d0c65aa560
+A modern, responsive chat interface built with React and TypeScript that connects to a FastAPI backend powered by IBM Watsonx AI. Features a WhatsApp-style design with smooth animations and real-time messaging experience.
 
-## How can I edit this code?
+![Chatbot Preview](https://via.placeholder.com/800x400/6366f1/white?text=AI+FAQ+Chatbot)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use Lovable**
+- 💬 **Modern Chat Interface** - WhatsApp/Intercom-inspired design
+- 🤖 **AI-Powered Responses** - Connected to IBM Watsonx AI via FastAPI
+- 🌀 **Loading States** - Typing indicators and smooth animations
+- 📱 **Fully Responsive** - Works on desktop, tablet, and mobile
+- ⏰ **Message Timestamps** - Real-time message tracking
+- 🎨 **Beautiful UI** - Gradient backgrounds and smooth transitions
+- 🔄 **Auto-scroll** - Automatically scrolls to new messages
+- ⚡ **Real-time Feel** - Instant message sending with loading feedback
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/b2928f1b-9ab3-4959-95d4-e4d0c65aa560) and start prompting.
+## 🚀 Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js (v16 or higher)
+- npm or yarn
+- FastAPI backend running on `localhost:8000`
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Backend Setup (Required)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+Make sure your FastAPI backend is running with these API credentials:
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+IBM_API_KEY=3nqGorN5PMhb9tOFO1ypA3a0-EllqF-AwJoLQbK3iCqM
+IBM_PROJECT_ID=a4a4d653-ddc5-41b7-b06d-a43a66383b3a
+IBM_REGION=eu-de
+IBM_MODEL_ID=google/flan-ul2
 ```
 
-**Edit a file directly in GitHub**
+Your backend should expose a POST endpoint at:
+```
+http://localhost:8000/ask
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+With request format:
+```json
+{
+  "query": "Your question here"
+}
+```
 
-**Use GitHub Codespaces**
+Response format:
+```json
+{
+  "answer": "AI generated response"
+}
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Frontend Installation
 
-## What technologies are used for this project?
+1. **Clone and navigate to the project:**
+   ```bash
+   cd your-chatbot-project
+   ```
 
-This project is built with:
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
 
-## How can I deploy this project?
+4. **Open your browser:**
+   Navigate to `http://localhost:8080`
 
-Simply open [Lovable](https://lovable.dev/projects/b2928f1b-9ab3-4959-95d4-e4d0c65aa560) and click on Share -> Publish.
+## 🏗️ Project Structure
 
-## Can I connect a custom domain to my Lovable project?
+```
+src/
+├── pages/
+│   └── Index.tsx          # Main chat interface
+├── lib/
+│   └── utils.ts           # Utility functions
+├── index.css              # Global styles and animations
+└── main.tsx               # App entry point
+```
 
-Yes, you can!
+## 🎨 Design Features
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- **Gradient Backgrounds** - Beautiful blue to purple gradients
+- **Message Bubbles** - Distinct styling for user and bot messages
+- **Typing Animation** - Bouncing dots when AI is thinking
+- **Smooth Animations** - Fade-in effects for new messages
+- **Responsive Layout** - Mobile-first design approach
+- **Modern Icons** - Lucide React icons throughout
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔧 Configuration
+
+### API Endpoint
+
+To change the backend URL, modify the fetch call in `src/pages/Index.tsx`:
+
+```typescript
+const response = await fetch('http://localhost:8000/ask', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    query: inputText.trim(),
+  }),
+});
+```
+
+### Styling
+
+The app uses Tailwind CSS for styling. Custom animations and colors are defined in `src/index.css`.
+
+## 🚨 Troubleshooting
+
+### Common Issues
+
+1. **"Failed to get response from AI"**
+   - Ensure your FastAPI backend is running on `localhost:8000`
+   - Check that CORS is properly configured in your FastAPI app
+   - Verify the API endpoint accepts POST requests to `/ask`
+
+2. **Messages not appearing**
+   - Check browser console for errors
+   - Verify the API response format matches expected structure
+
+3. **Styling issues**
+   - Clear browser cache
+   - Ensure Tailwind CSS is properly configured
+
+### Backend CORS Setup
+
+Make sure your FastAPI backend includes CORS middleware:
+
+```python
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+```
+
+## 🔮 Future Enhancements
+
+- [ ] Dark mode toggle
+- [ ] Message export functionality
+- [ ] Voice input support
+- [ ] Message reactions
+- [ ] Chat history persistence
+- [ ] Multi-language support
+- [ ] File upload capability
+
+## 📝 API Reference
+
+### Send Message
+
+**POST** `/ask`
+
+**Request Body:**
+```json
+{
+  "query": "string"
+}
+```
+
+**Response:**
+```json
+{
+  "answer": "string"
+}
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+---
+
+**Built with ❤️ using React, TypeScript, Tailwind CSS, and IBM Watsonx AI**
